@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     getAllSeriesData();
-  });
+  }, []);
 
   return (
     <div>
