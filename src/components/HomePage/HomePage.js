@@ -9,7 +9,7 @@ function HomePage(props) {
     <section className="series-section">
       <Container>
         <Title title={"Top List"} />
-        <SeriesList allList={props.data} />
+        <SeriesList allList={props} />
       </Container>
     </section>
   );
