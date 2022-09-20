@@ -5,11 +5,12 @@ import "./HomePageStyles.css";
 import SeriesList from "./SeriesList";
 
 function HomePage(props) {
+ 
   return (
     <section className="series-section">
       <Container>
         <Title title={"Top List"} />
-        <SeriesList allList={props} />
+        <SeriesList listData={props.data}/>
       </Container>
     </section>
   );

@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Header.css";
 
-function Header() {
+function Header(props) {
+  const [queryStr, searchQueryStr] = useState("");
+
+  const searchHandler = (event) => {
+    searchQueryStr(event.target.value);
+  };
+
+  const searchSubmitHandler = () => {
+    props.onSearch(queryStr);
+  };
+
   return (
     <header className="header">
       <div className="container">
@@ -20,8 +30,13 @@ function Header() {
                   placeholder="Search"
                   id="searchBar"
                   className="search__bar"
+                  onChange={searchHandler}
                 />
-                <button className="search__btn" id="searchBtn">
+                <button
+                  className="search__btn"
+                  id="searchBtn"
+                  onClick={searchSubmitHandler}
+                >
                   <i className="fa-solid fa-magnifying-glass"></i>
                 </button>
               </div>
