@@ -5,6 +5,7 @@ import "./HomePageStyles.css";
 import SeriesList from "./SeriesList";
 
 function HomePage(props) {
+  
   return (
     <section className="series-section">
       <Container>

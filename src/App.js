@@ -31,6 +31,7 @@ function App() {
       });
 
       setAllData(parsedSeries);
+      
     } catch (error) {
       setApiError(true);
     }
@@ -43,7 +44,7 @@ function App() {
   return (
     <div>
       <Header />
-      {apiError && <HomePage list={allData} />}
+      {!apiError && <HomePage list={allData} />}
     </div>
   );
 }
