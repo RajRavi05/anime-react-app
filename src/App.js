@@ -1,50 +1,43 @@
+import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import HomePage from "./components/HomePage/HomePage";
 
 function App() {
   const [allData, setAllData] = useState([]);
-  const [apiError, setApiError] = useState(false);
+  const [apiComplete, setAPIComplete] = useState(false);
+  const [pageNo, setPageNo] = useState(1);
 
-  const getAllSeriesData = useCallback(async () => {
-    let pageNo = 1;
-    const API_DEFAULT = `https://api.jikan.moe/v4/anime`;
-    const API_PAGINATION = `https://api.jikan.moe/v4/anime?page=${pageNo}`;
-    const API_SEARCH = `https://api.jikan.moe/v4/anime?q=`;
+  const [serviceOne, setServiceOne] = useState(
+    "https://api.jikan.moe/v4/anime"
+  );
+  const [serviceTwo, setServiceTwo] = useState(
+    "https://api.jikan.moe/v4/anime?page=" + pageNo
+  );
 
-    try {
-      const response = await fetch(API_PAGINATION);
-
-      if (!response.ok) {
-        throw new Error("Something went wrong. :(");
-      }
-
-      const data = await response.json();
-
-      const parsedSeries = data.data.map((item) => {
-        return {
-          title: item.title,
-          mal_id: item.mal_id,
-          imageURL: item.images.jpg.image_url,
-          rating: item.score,
-        };
-      });
-
-      setAllData(parsedSeries);
-      
-    } catch (error) {
-      setApiError(true);
+  const getAllData = useCallback(async () => {
+    const response = await fetch(serviceTwo);
+    if (!response.ok) {
+      alert("Something went wrong :(");
     }
+    const data = await response.json();
+    setAllData(data);
+    setAPIComplete(true);
+  }, [serviceTwo]);
+
+  const updateSearchresult = useCallback((data) => {
+    setAllData(data);
+    setAPIComplete(true);
   }, []);
 
   useEffect(() => {
-    getAllSeriesData();
-  }, [getAllSeriesData]);
+    getAllData();
+  }, [getAllData]);
 
   return (
     <div>
-      <Header />
-      {!apiError && <HomePage list={allData} />}
+      <Header showSearchData={updateSearchresult} />
+      {apiComplete && <HomePage data={allData.data} />}
     </div>
   );
 }
