@@ -1,7 +1,10 @@
 function SeriesItem(props) {
-
   return (
-    <div className="series__list-item">
+    <div
+      className="series__list-item"
+      key={props.malId}
+      id={"item-" + props.malId}
+    >
       <div className="series__list-item__img">
         <img src={props.imageURL} alt="" />
       </div>

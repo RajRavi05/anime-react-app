@@ -8,8 +8,12 @@ function Header(props) {
     searchQueryStr(event.target.value);
   };
 
-  const searchSubmitHandler = () => {
-    props.onSearch(queryStr);
+  const searchSubmitHandler = async () => {
+    const response = await fetch(
+      "https://api.jikan.moe/v4/anime?q=" + queryStr
+    );
+    const data = await response.json();
+    props.showSearchData(data);
   };
 
   return (

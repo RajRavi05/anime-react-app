@@ -7,7 +7,6 @@ function App() {
   const [allData, setAllData] = useState([]);
   const [apiComplete, setAPIComplete] = useState(false);
   const [pageNo, setPageNo] = useState(1);
-  const [searchQuery, setSearchQuery] = useState("");
 
   const [serviceOne, setServiceOne] = useState(
     "https://api.jikan.moe/v4/anime"
@@ -15,7 +14,6 @@ function App() {
   const [serviceTwo, setServiceTwo] = useState(
     "https://api.jikan.moe/v4/anime?page=" + pageNo
   );
-  const [serviceThree, setServiceThree] = useState("");
 
   const getAllData = useCallback(async () => {
     const response = await fetch(serviceTwo);
@@ -27,13 +25,18 @@ function App() {
     setAPIComplete(true);
   }, [serviceTwo]);
 
+  const updateSearchresult = useCallback((data) => {
+    setAllData(data);
+    setAPIComplete(true);
+  }, []);
+
   useEffect(() => {
     getAllData();
   }, [getAllData]);
 
   return (
     <div>
-      <Header />
+      <Header showSearchData={updateSearchresult} />
       {apiComplete && <HomePage data={allData.data} />}
     </div>
   );
